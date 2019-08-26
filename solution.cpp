@@ -7,8 +7,9 @@
 
 using namespace std;
 
+// Function prototypes
 vector<vector<int>> parseInputData();
-void parseSubVectors(vector<vector<int>>);
+vector<int> parseSubVectors(vector<int>);
 vector<int> getMobMeetingCoordinates(vector<int>);
 int getTotalDistanceTravelled(vector<int>, vector<int>);
 void outputAnswer(vector<int>);
@@ -16,11 +17,20 @@ void outputAnswer(vector<int>);
 int main() {
   vector<vector<int>> parsedInputData = parseInputData();
 
-  parseSubVectors(parsedInputData);
+  for(int counter = 0; counter < parsedInputData.size(); counter++) {
+    outputAnswer(parseSubVectors(parsedInputData[counter]));
+  }
 
   return 0;
 }
+/*
 
+  This function takes input from
+  a text file and adds it to a
+  vector of vector<int>'s and
+  returns that value
+
+*/
 vector<vector<int>> parseInputData() {
   vector<vector<int>> inputDataFromFileParsed;
 
@@ -46,22 +56,40 @@ vector<vector<int>> parseInputData() {
   return inputDataFromFileParsed;
 }
 
-void parseSubVectors(vector<vector<int>> parsedInputData) {
+/*
+  This function takes in a vector
+  of mob member positions and then
+  distills a solution (or indicates
+  'no solution') and returns it
+*/
+vector<int> parseSubVectors(vector<int> parsedInputData) {
   vector<int> getAnswerVector;
 
-  for(int counter = 0; counter < parsedInputData.size(); counter++) {
-    getAnswerVector = getMobMeetingCoordinates(parsedInputData[counter]);
-    getAnswerVector.push_back(getTotalDistanceTravelled(parsedInputData[counter], getAnswerVector));
-    outputAnswer(getAnswerVector);
-    }
+  getAnswerVector = getMobMeetingCoordinates(parsedInputData);
+  getAnswerVector.push_back(getTotalDistanceTravelled(parsedInputData, getAnswerVector));
+
+  return getAnswerVector;
 }
 
+/*
+  This function returns a vector that
+  contains 2 values, an X and Y coordinate
+  indicating the best location for mob
+  members to congregate at. Works by sorting
+  the raw input data of points into EW and NS
+  vectors, then removing the first and last
+  values until only 1 or 2 values remain.
+  Contest specifications say to always use the
+  smaller of the 2 values (or just the 1 value
+  if that's the result!) so just grab vector[0]
+  because they've been sorted in this function.
+  Also return the distance all mob members
+  must travel to reach this point.
+*/
 vector<int> getMobMeetingCoordinates(vector<int> singleSolutionData) {
   vector<int> eastWestData;
   vector<int> northSouthData;
   vector<int> answerVector;
-
-  int tempDistaceCounter = 0;
 
   for(int i = 1; i < singleSolutionData.size(); i+=2) {
     eastWestData.push_back(singleSolutionData[i]);
@@ -89,6 +117,13 @@ vector<int> getMobMeetingCoordinates(vector<int> singleSolutionData) {
   return answerVector;
 }
 
+/*
+  This function takes in the coordinate where
+  mob members should meet and the raw input data
+  of all mob members and then calculate the
+  distance all mob members must travel
+  to get to the answer coordinate.
+*/
 int getTotalDistanceTravelled(vector<int> singleCoordinatesSet, vector<int> answerVector) {
   int tempDistaceCounter = 0;
 
@@ -110,6 +145,11 @@ int getTotalDistanceTravelled(vector<int> singleCoordinatesSet, vector<int> answ
   return tempDistaceCounter;
 }
 
+/*
+  This function takes in a vector with solution
+  data (point + distance travelled) and outputs it
+  in the format the contest specifies.
+*/
 void outputAnswer(vector<int> answerVector) {
     cout << "Solution: (" << answerVector[0] << "," << answerVector[1] << ") " << answerVector[2] << endl;
 }

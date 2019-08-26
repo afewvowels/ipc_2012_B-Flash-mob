@@ -1,0 +1,25 @@
+#1 read input into a vector
+
+#2 break up vector into smaller vectors using the first value as the length of the vector, then removing that number of values and then repeating this process until the first value is 0
+
+#3 create a two dimensional array (vector<vector>) using the vectors created above
+
+#4 use a counter and break off the vectors holding the raw data for each group one-by-one
+
+#5 break these vectors into east-west and north-south vectors by looping through the group vector and adding i % 2 == 0 to east-west and i % 2 == 1 to north-south
+
+#6 sort the east-west and north-south vectors independently from smallest to largest (no need to keep the points together anymore)
+
+#7 erase the first and last numbers of the EW and NS vectors until there are only 2 or 1 elements left
+
+#8 select the first element of the remaining values (rules state to use lesser value, both vectors are sorted from smallest to largest so smallest value will always be correct whether there is 1 value remaining or 2 values remaining)
+
+#9 create a vector of vector<int>'s to hold the solution and push_back the EW and NS values to (# of solution vectors will match # from step #3), will form a point with solution[0] and solution[1] (solution[2] will be calculated later and will hold the total distance travelled by all members)
+
+#10 now use the vector from #4 (that holds data for one group) and go through the vector and determine if the mob member location is > or < solution[0] and solution[1] and subtract them in the correct order (larger - smaller) and add them to a temporary counter to hold the total distance travelled
+
+#11 push_back the distance counter from #10 to the appropriate solution vector
+
+#12 for each solution vector in the solutions vector, output the data in the format: "(solution[0], solution[1]), solution[2]"
+
+#13 cake

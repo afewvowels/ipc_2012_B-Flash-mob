@@ -1,0 +1,77 @@
+read input into vector<int> rawdata
+
+do {
+  var #items = rawdata.begin()
+
+  for(i = 1, i < #items, i++) {
+    vector<int> temp.push_back(rawdata[i])
+
+    when i == #items
+      rawdata.erase(0, #items - 1)
+      break
+  }
+
+  vector<vector> allitems.push_back(temp)
+  temp.clear()
+
+} while(rawdata.begin() != 0)
+
+vector<vector> allsolutions
+
+for(i = 0, i < allitems.length(), i++) {
+  vector<int> temp = allitems[i]
+  for(i = 0, i < temp.length(), i+2) {
+    vector<int> ew.push_back(temp[i])
+  }
+  for(i = 1, i < temp.length(), i+2) {
+    vector<int> ns.push_back(temp[i])
+  }
+
+  sort ew
+  sort ns
+
+  do {
+    ew.erase(0)
+    ew.pop_back()
+
+    ns.erase(0)
+    ns.pop_back()
+  } while(ew.length() >= 2)
+
+  vector<vector> solution
+
+  solution.insert[0] = ew[0]
+  solution.insert[1] = ns[0]
+
+  int distancecounter
+
+  for(i = 0, i < temp.length(), i++) {
+    if(i % 2 == 0) {
+      if(temp[i] > solution[0]) {
+        distancecounter += temp[i] - solution[0]
+      } else {
+        distancecounter += solution[0] - temp[i]
+      }
+    } else if (i % 2 == 1) {
+      if(temp[i] > solution[1]) {
+      distancecounter += temp[i] - solution[i]
+      } else {
+        distancecounter += solution[1] - temp[i]
+      }
+    }
+  }
+
+  solutions.push_back(distancecounter)
+
+  allsolutions.push_back(solution)
+
+  ew.clear()
+  ns.clear()
+  temp.clear()
+
+  distancecounter = 0
+}
+
+for(i = 0, i < allsolutions.length(), i++) {
+  cout << "(" << allsolutions[i][0] << "," << allsolutions[i][1] << ") " << allsolutions[i][2]
+}
